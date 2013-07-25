@@ -60,10 +60,7 @@ player::find_path (board * Board, int a, int b)
 			int wall_orig = Board->tile_status (a, b),
 			    wall_left = Board->tile_status (a-1, b),
 			    wall_down = Board->tile_status (a, b-1),
-			    want      = grid [a][b]+1;
-
-			if (want == 5)
-				want = 1;
+			    want      = (grid[a][b] + 1) % 5;
 
 			if (wall_orig != 1 && wall_orig != 3 && want <= 1) 
 			{
@@ -114,10 +111,11 @@ player::find_path (board * Board, int a, int b)
 
 			int wall_orig = Board->tile_status (a, b),
 			    wall_left = Board->tile_status (a-1, b),
-			    wall_down = Board->tile_status (a, b-1);
+			    wall_down = Board->tile_status (a, b-1),
+			    want      = (grid[a][b] + 1) % 5;
 
 			// first we try to go down
-			if (wall_down != 1 && wall_down != 3 && grid [a][b] != 3)
+			if (wall_down != 1 && wall_down != 3 && want <= 3)
 			{
 				grid [a][b] = 3;
 				success = 1;
@@ -125,7 +123,7 @@ player::find_path (board * Board, int a, int b)
 			}
 
 			// then we try left
-			else if (wall_left != 2 && wall_left != 3 && grid [a][b] != 4)
+			else if (wall_left != 2 && wall_left != 3 && want <= 4)
 			{
 				grid [a][b] = 4;
 				success = 1;
@@ -133,10 +131,34 @@ player::find_path (board * Board, int a, int b)
 			}
 
 			// otherwise right
-			else if (wall
+			else if (wall_orig != 2 && wall_right != 3 && want <= 2)
+			{
+				grid [a][b] = 2;
+				success = 1;
+				a++;
+			}
+
+			// at last, we try up
+			else if (wall_orig != 1 && wall_orig != 3 && want <= 1)
+			{
+				grid [a][b] = 1;
+				success = 1;
+				b++;
+			}
+
+			// if no direction is good ...
+			if (success == 0)
+			{
+				couter = 100 * size_x * size_y;
+				break;
+			}
+
+			counter++;
 
 		} while (counter <= size_x * size_y * 2 && b > 1);
 	}
+
+	return counter;
 }
 
 int
