@@ -1,0 +1,31 @@
+Yolo-Walker
+----------------------------
+Note: the name will probably have to change in the future :P
+
+I Introduction
+----------------------------
+A simple 2 player game, based on a board game I played one summer, whose name I cannot remember.
+
+
+II Game rulez
+-----------------------------
+The game has a simple rules: your objective is to reach the other side of the board before your
+opponent. Each turn you can move in either direction (not diagonal) or build a wall to annoy your
+competitor.
+
+III Current Objectives
+-----------------------------
+* program it in C++, with Qt library,
+* use cURL library for playing over the web
+* create simple board, images and so on with gimp
+* create a very simple brute force AI for playing alone
+
+IV License
+-----------------------------
+GPL, since we use Qt, I guess. Or GPL compatible license, like
+WTFPL :P.
+
+V Credits
+-----------------------------
+I think it's to early at this point for credits, but we put them here just for the LULZ anyway.
+
