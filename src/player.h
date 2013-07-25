@@ -22,6 +22,7 @@ class player
 		string name;	// player's name
 		
 		void update_path (board *);
+		void update_path (int);
 
 	public:
 		int x,		// x position on the board

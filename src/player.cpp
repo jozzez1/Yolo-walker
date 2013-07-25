@@ -175,6 +175,12 @@ player::update_path (board * Board)
 	path = find_path (Board, x, y);
 }
 
+void
+player::update_path (int length)
+{
+	path = length;
+}
+
 int
 player::move (board * Board, int d)
 {
