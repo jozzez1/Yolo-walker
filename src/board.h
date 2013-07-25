@@ -11,7 +11,7 @@ class board
 		int * x, // array with x-coordinates of players
 		    * y; // array with y-coordinates of players
 
-		int ** M;// the actual board
+		int ** M;// the actual board -- info about walls and such
 
 		int X,   // dimension of the board in X
 		    Y;   // dimension of the board in Y
@@ -31,8 +31,11 @@ class board
 		// players are on different positions
 		int check_board ();
 
+		// checks the wall status of the tile
+		int tile_status (int, int);
+
 		// constructor
-		board (int, int);
+		void board (int, int);
 }
 
 #endif

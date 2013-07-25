@@ -1,5 +1,6 @@
 #include "player.h"
 
+void
 player::player (board Board)
 {
 	path	= Board->getY ();
