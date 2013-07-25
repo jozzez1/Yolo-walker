@@ -276,7 +276,7 @@ player::move (board * Board, int d)
 	}
 
 	if (returnVal == MOVE_SUCCESS)
-		update_path (sPath);
+		update_path (Board);
 
 	return returnVal;
 }
@@ -294,8 +294,7 @@ player::wall (board * Board, int xc, int yc, int mode)
 	int other_index = (index + 1)%2,
 	    otherX	= Board->get_py (other_index),
 	    otherY	= Board->get_px (other_index),
-	    wall_next	= 0,
-	    sPath	= 0;
+	    wall_next, sPath;
 
 	// we check if we have enough walls
 	if (walls < 1)
@@ -358,7 +357,6 @@ player::wall (board * Board, int xc, int yc, int mode)
 				returnVal = PLAYER_FAYUL;
 
 			// we check if this criples either of players
-			sPath;
 			// a) does it cripple us?
 			sPath = find_path (Board, x, y);
 			if (sPath >= size_x * size_y * 4)
@@ -381,6 +379,9 @@ player::wall (board * Board, int xc, int yc, int mode)
 			std::cout << "Error! Unknown wall specification!\nExiting." << std::endl;
 			exit (EXIT_FAILURE);
 	}
+
+	if (returnVal == WALL_SUCCESS)
+		update_path (sPath);
 
 	return returnVal;
 }
