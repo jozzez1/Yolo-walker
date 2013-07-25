@@ -1,22 +1,23 @@
 #include "board.h"
 
-void
 board::board (int X_dimension, int Y_dimension)
 {
 	X 	= X_dimension;
 	Y	= Y_dimension;
 
 	// we set them just to initialize them, although it's unnecessary
+	x = new int [2];
+	y = new int [2];
+
 	x[0]	= 0;
 	x[1]	= 0;
 	y[0]	= 0;
 	y[1]	= Y;
 
 	// we initialize with an empty board -- all elements are zero
-	M = (int **) malloc (X * sizeof (int *));
+	M = new int*[X];
 	for (int i = 0; i <= X-1; i++)
-		M[i] = (int *) calloc (Y, sizeof (int));
-
+		M[i] = new int [Y];
 	// wall codes, for further reference
 	/////////////////////////////////////////////
 	// 0 -- nothing on this tile
@@ -28,7 +29,7 @@ board::board (int X_dimension, int Y_dimension)
 int
 board::tile_status (int xc, int yc)
 {
-	return M[x][y];
+	return M [xc][yc];
 }
 
 void
@@ -48,14 +49,13 @@ board::set_wall (int xc, int yc, int mode)
 	// followed by some draw function we'll add later
 }
 
-void
 board::~board ()
 {
 	for (int i = 0; i <= X-1; i++)
-		free (M[i]);
-	free (M);
+		delete [] M[i];
 
-	free (x);
-	free (y);
+	delete [] M;
+	delete [] x;
+	delete [] y;
 }
 

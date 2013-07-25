@@ -27,10 +27,10 @@ class board
 		void move_player (int, int, int);
 
 		// constructor
-		void board (int, int);
+		board (int X_dimension, int Y_dimension);
 
 		// destructor
-		void ~board ();
-}
+		~board ();
+};
 
 #endif
