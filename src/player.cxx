@@ -48,6 +48,10 @@ player::find_path (board * Board, int a, int b)
 	// grid is there so in case we reach the dead end, we can
 	// retrace our steps, and go along a different path, than
 	// the one we have already taken
+	// 1 - we went up
+	// 2 - we went right
+	// 3 - we went left
+	// 4 - we went down
 
 	// if we're player one, we have to get to the upper side
 	if (direction == 1)
@@ -99,7 +103,7 @@ player::find_path (board * Board, int a, int b)
 
 			counter++;
 
-		} while (counter <= size_x * size_y * 2 && b < size_y - 1);
+		} while (counter <= size_x * size_y * 4 && b < size_y - 1);
 	}
 
 	// if we're player two, we have to get to the lower side
@@ -155,7 +159,7 @@ player::find_path (board * Board, int a, int b)
 
 			counter++;
 
-		} while (counter <= size_x * size_y * 2 && b > 1);
+		} while (counter <= size_x * size_y * 4 && b > 1);
 	}
 
 	return counter;
@@ -255,7 +259,7 @@ player::move (board * Board, int d)
 	}
 
 	if (returnVal == MOVE_SUCCESS)
-		player::update_path (Board);
+		update_path (Board);
 
 	return returnVal;
 }
@@ -299,12 +303,12 @@ player::wall (board * Board, int xc, int yc, int mode)
 			// we check if this criples either of players
 			// a) does it cripple us?
 			int sPath = find_path (Board, x, y);
-			if (sPath >= size_x * size_y * 2)
+			if (sPath >= size_x * size_y * 4)
 				returnVal = PLAYER_FAYUL;
 
 			// b) does it cripple our opponent
 			sPath = find_path (Board, otherX, otherY);
-			if (sPath >= size_x * size_y * 2)
+			if (sPath >= size_x * size_y * 4)
 				returnVal = PLAYER_FAYUL;
 
 			// we successfully built a wall
@@ -333,12 +337,12 @@ player::wall (board * Board, int xc, int yc, int mode)
 			int sPath;
 			// a) does it cripple us?
 			sPath = find_path (Board, x, y);
-			if (sPath >= size_x * size_y * 2)
+			if (sPath >= size_x * size_y * 4)
 				returnVal = PLAYER_FAYUL;
 
 			// b) does it cripple our opponent
 			sPath = find_path (Board, otherX, otherY);
-			if (sPath >= size_x * size_y * 2)
+			if (sPath >= size_x * size_y * 4)
 				returnVal = PLAYER_FAYUL;
 
 			else
