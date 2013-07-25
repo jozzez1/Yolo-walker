@@ -15,6 +15,14 @@ player::player (board * Board, int number, int init_walls, string name)
 
 	// and the name
 	name.assign (name);
+
+	// first player starts
+	if (index == 0)
+		turn_info = 1;
+
+	// 2nd player has to wait
+	else
+		turn_info = 0;
 }
 
 int

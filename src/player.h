@@ -13,6 +13,8 @@ class player
 		    index,	// player 1,2, ... , n
 		    walls;	// number of walls a player can still build
 
+		int turn_info;	// if the turn is successfull or not
+
 		string name;	// player's name
 		
 		void update_path (board);
