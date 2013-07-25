@@ -165,6 +165,13 @@ player::find_path (board * Board, int a, int b)
 	return counter;
 }
 
+// some primitive path will do, just so we know what we're up against ;)
+void
+player::update_path (board * Board)
+{
+	path = find_path (Board, x, y);
+}
+
 int
 player::move (board * Board, int d)
 {
