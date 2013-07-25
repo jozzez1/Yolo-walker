@@ -3,7 +3,7 @@
 #include "player.h"
 
 void
-player::player (board * Board, int number, int init_walls, string name)
+player::player (board * Board, int number, int init_walls, string Player_name)
 {
 	path	= Board->getY ();
 	y	= 0;
@@ -14,7 +14,7 @@ player::player (board * Board, int number, int init_walls, string name)
 	index	= number;
 
 	// and the name
-	name.assign (name);
+	name.assign (Player_name);
 
 	// first player starts
 	if (index == 0)
