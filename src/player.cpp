@@ -276,7 +276,7 @@ player::move (board * Board, int d)
 	}
 
 	if (returnVal == MOVE_SUCCESS)
-		update_path (Board);
+		update_path (sPath);
 
 	return returnVal;
 }
