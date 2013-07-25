@@ -31,7 +31,7 @@ class player
 
 		int move (board *, int, int);
 		int wall (board *, int, int, int);
-		int shortest_path (board *, int, int);
+		int find_path (board *, int, int);
 
 		// set starting x-coordinate
 		// int setX ();

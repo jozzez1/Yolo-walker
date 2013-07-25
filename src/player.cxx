@@ -25,6 +25,120 @@ player::player (board * Board, int number, int init_walls, string Player_name)
 		turn_info = 0;
 }
 
+// calculate a path to the end, from (a,b), as if no other players were there,
+// with only the walls; it's a very primitive algorythm, but it will do for now
+int
+player::find_path (board * Board, int a, int b)
+{
+	int size_x	= Board->get_px (index),
+	    size_y	= Board->get_py (index),
+	    counter	= 0,
+	    success	= 0,
+	    direction	= 1;
+
+	// the 2nd player has to go to the south ...
+	if (index == 1)
+		direction = -1;
+
+	// we plot our walk, so we can avoid mistakes
+	int ** grid = (int **) malloc (size_x * sizeof (int *));
+	for (int i = 0; i <= size_x - 1; i++)
+		grid [i] = (int *) calloc (size_y, sizeof (int));
+
+	// grid is there so in case we reach the dead end, we can
+	// retrace our steps, and go along a different path, than
+	// the one we have already taken
+
+	// if we're player one, we have to get to the upper side
+	if (direction == 1)
+	{
+		want = 1;
+		do
+		{
+			success = 0;
+
+			int wall_orig = Board->tile_status (a, b),
+			    wall_left = Board->tile_status (a-1, b),
+			    wall_down = Board->tile_status (a, b-1),
+			    want      = grid [a][b]+1;
+
+			if (want == 5)
+				want = 1;
+
+			if (wall_orig != 1 && wall_orig != 3 && want <= 1) 
+			{
+				grid [a][b] = 1;
+				success = 1;
+				b++;
+			}
+
+			else if (wall_orig != 2 && wall_orig != 3 && want <= 2)
+			{
+				grid [a][b] = 2;
+				success = 1;
+				a++;
+			}
+
+			else if (wall_left != 2 && wall_orig != 3 && want <= 4)
+			{
+				grid [a][b] = 4;
+				success = 1;
+				a--;
+			}
+
+			else if (wall_down != 1 && wall_orig != 3 && want <= 3)
+			{
+				grid [a][b] = 3;
+				success = 1;
+				b--;
+			}
+
+			// if no direction is good ...
+			if (success == 0)
+			{
+				couter = 100 * size_x * size_y;
+				break;
+			}
+
+			counter++;
+
+		} while (counter <= size_x * size_y * 2 && b < size_y - 1);
+	}
+
+	// if we're player two, we have to get to the lower side
+	if (direction == -1)
+	{
+		do
+		{
+			success = 0;
+
+			int wall_orig = Board->tile_status (a, b),
+			    wall_left = Board->tile_status (a-1, b),
+			    wall_down = Board->tile_status (a, b-1);
+
+			// first we try to go down
+			if (wall_down != 1 && wall_down != 3 && grid [a][b] != 3)
+			{
+				grid [a][b] = 3;
+				success = 1;
+				b--;
+			}
+
+			// then we try left
+			else if (wall_left != 2 && wall_left != 3 && grid [a][b] != 4)
+			{
+				grid [a][b] = 4;
+				success = 1;
+				a--;
+			}
+
+			// otherwise right
+			else if (wall
+
+		} while (counter <= size_x * size_y * 2 && b > 1);
+	}
+}
+
 int
 player::move (board * Board, int d)
 {
@@ -162,12 +276,12 @@ player::wall (board * Board, int xc, int yc, int mode)
 
 			// we check if this criples either of players
 			// a) does it cripple us?
-			int sPath = shortest_path (Board, x, y);
+			int sPath = find_path (Board, x, y);
 			if (sPath >= size_x * size_y * 2)
 				returnVal = PLAYER_FAYUL;
 
 			// b) does it cripple our opponent
-			sPath = shortest_path (Board, otherX, otherY);
+			sPath = find_path (Board, otherX, otherY);
 			if (sPath >= size_x * size_y * 2)
 				returnVal = PLAYER_FAYUL;
 
@@ -196,12 +310,12 @@ player::wall (board * Board, int xc, int yc, int mode)
 			// we check if this criples either of players
 			int sPath;
 			// a) does it cripple us?
-			sPath = shortest_path (Board, x, y);
+			sPath = find_path (Board, x, y);
 			if (sPath >= size_x * size_y * 2)
 				returnVal = PLAYER_FAYUL;
 
 			// b) does it cripple our opponent
-			sPath = shortest_path (Board, otherX, otherY);
+			sPath = find_path (Board, otherX, otherY);
 			if (sPath >= size_x * size_y * 2)
 				returnVal = PLAYER_FAYUL;
 
