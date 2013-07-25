@@ -134,9 +134,14 @@ player::wall (board * Board, int xc, int yc, int mode)
 	    size_y	= Board->getY (),
 	    returnVal	= -1;
 
+	int other_index = (index + 1)%2,
+	    otherX	= Board->get_py (other_index),
+	    otherY	= Board->get_px (other_index);
+
+
 	// we check if we have enough walls
 	if (walls < 1)
-		returnVal = WALLS_FAYUL;
+		returnVal = PLAYER_FAYUL;
 
 	// we check for a valid move
 	switch (mode)
@@ -155,11 +160,24 @@ player::wall (board * Board, int xc, int yc, int mode)
 			else if (wall_next == 1 || wall_next == 3)
 				returnVal = PLAYER_FAYUL;
 
+			// we check if this criples either of players
+			// a) does it cripple us?
+			int sPath = shortest_path (Board, x, y);
+			if (sPath >= size_x * size_y * 2)
+				returnVal = PLAYER_FAYUL;
+
+			// b) does it cripple our opponent
+			sPath = shortest_path (Board, otherX, otherY);
+			if (sPath >= size_x * size_y * 2)
+				returnVal = PLAYER_FAYUL;
+
 			// we successfully built a wall
-			else
+			else if (returnVal != PLAYER_FAYUL)
 			{
 				Board->set_wall (xc, yc, wall_orig + mode);
 				Board->set_wall (xc+1, yc, wall_next + mode);
+
+				// but we have to check if the players can still run out
 
 				returnVal = WALL_SUCCESS;
 			}
@@ -173,6 +191,18 @@ player::wall (board * Board, int xc, int yc, int mode)
 
 			int wall_next = Board_>tile_status (xc, yc + 1);
 			else if (wall_next == 2 || wall_next == 3)
+				returnVal = PLAYER_FAYUL;
+
+			// we check if this criples either of players
+			int sPath;
+			// a) does it cripple us?
+			sPath = shortest_path (Board, x, y);
+			if (sPath >= size_x * size_y * 2)
+				returnVal = PLAYER_FAYUL;
+
+			// b) does it cripple our opponent
+			sPath = shortest_path (Board, otherX, otherY);
+			if (sPath >= size_x * size_y * 2)
 				returnVal = PLAYER_FAYUL;
 
 			else

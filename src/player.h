@@ -17,7 +17,7 @@ class player
 
 		string name;	// player's name
 		
-		void update_path (board);
+		void update_path (int);
 
 	public:
 		int x,		// x position on the board
@@ -31,6 +31,7 @@ class player
 
 		int move (board *, int, int);
 		int wall (board *, int, int, int);
+		int shortest_path (board *, int, int);
 
 		// set starting x-coordinate
 		// int setX ();
