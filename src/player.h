@@ -1,17 +1,19 @@
 #ifndef __PLAYER
 #define __PLAYER
 
-#define MOVE_SUCCESS 15
-#define WALL_SUCCESS 14
+#define MOVE_SUCCESS	15
+#define WALL_SUCCESS	14
+#define PLAYER_FAYUL	13
 
 // the player class
 class player
 {
 	private:
 		int path,	// shortest path to the finish
-		    index;	// player 1,2, ... , n
+		    index,	// player 1,2, ... , n
+		    walls;	// number of walls a player can still build
 
-		string player_name;
+		string name;	// player's name
 		
 		void update_path (board);
 
@@ -21,14 +23,18 @@ class player
 
 		// some self-explainatory functions
 		int get_path ()	{ return path; }
-		int move (board);
-		int wall (board);
+		int get_walls() { return num_walls; }
+
+		void set_walls (int);
+
+		int move (board *, int, int);
+		int wall (board *, int, int, int);
 
 		// set starting x-coordinate
 		// int setX ();
 
 		// constructor
-		void player (board);
+		void player (board *, int, int, string);
 
 		// destructor
 		void ~player ();

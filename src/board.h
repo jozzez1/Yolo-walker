@@ -1,10 +1,6 @@
 #ifndef __BOARD_GAME
 #define __BOARD_GAME
 
-#define BOARD_ALL_CLEAR	13
-#define PLAYER_FAIL	12
-#define WALLS_FAYUL	11
-
 class board
 {
 	private:
@@ -21,21 +17,20 @@ class board
 		int getY () { return Y; }
 
 		// get player1/2 coordinates
-		int get_p1x () { return x[0]; }
-		int get_p1y () { return y[0]; }
-		int get_p2x () { return x[1]; }
-		int get_p2y () { return y[0]; }
-
-		// check if everything is ok:
-		// walls don't overlap each other, there are ways out
-		// players are on different positions
-		int check_board ();
+		int get_px (int a) { return x[a]; }
+		int get_py (int a) { return y[a]; }
 
 		// checks the wall status of the tile
 		int tile_status (int, int);
+		
+		void set_wall (int, int, int);
+		void move_player (int, int, int);
 
 		// constructor
 		void board (int, int);
+
+		// destructor
+		void ~board ();
 }
 
 #endif

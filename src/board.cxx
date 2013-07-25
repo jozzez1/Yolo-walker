@@ -26,14 +26,36 @@ board::board (int X_dimension, int Y_dimension)
 }
 
 int
-board::tile_status (int x, int y)
+board::tile_status (int xc, int yc)
 {
-
+	return M[x][y];
 }
 
-// this function checks if the board is consistent with the game rules
 void
-board::check_board ()
+board::move_player (int index, int xc, int yc)
 {
-	
+	x[index] = xc;
+	y[index] = yc;
+
+	// followed by some draw function we'll add later
 }
+
+void
+board::set_wall (int xc, int yc, int mode)
+{
+	M[xc][yc] = mode;
+
+	// followed by some draw function we'll add later
+}
+
+void
+board::~board ()
+{
+	for (int i = 0; i <= X-1; i++)
+		free (M[i]);
+	free (M);
+
+	free (x);
+	free (y);
+}
+
