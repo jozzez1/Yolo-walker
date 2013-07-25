@@ -2,7 +2,6 @@
 #include <string>
 #include "player.h"
 
-void
 player::player (board * Board, int number, int init_walls, string Player_name)
 {
 	path	= Board->getY ();
@@ -41,9 +40,9 @@ player::find_path (board * Board, int a, int b)
 		direction = -1;
 
 	// we plot our walk, so we can avoid mistakes
-	int ** grid = (int **) malloc (size_x * sizeof (int *));
+	int ** grid = new int*[size_x];
 	for (int i = 0; i <= size_x - 1; i++)
-		grid [i] = (int *) calloc (size_y, sizeof (int));
+		grid [i] = new int [size_y];
 
 	// grid is there so in case we reach the dead end, we can
 	// retrace our steps, and go along a different path, than
@@ -56,7 +55,6 @@ player::find_path (board * Board, int a, int b)
 	// if we're player one, we have to get to the upper side
 	if (direction == 1)
 	{
-		want = 1;
 		do
 		{
 			success = 0;
@@ -97,7 +95,7 @@ player::find_path (board * Board, int a, int b)
 			// if no direction is good ...
 			if (success == 0)
 			{
-				couter = 100 * size_x * size_y;
+				counter = 100 * size_x * size_y;
 				break;
 			}
 
@@ -135,7 +133,7 @@ player::find_path (board * Board, int a, int b)
 			}
 
 			// otherwise right
-			else if (wall_orig != 2 && wall_right != 3 && want <= 2)
+			else if (wall_orig != 2 && wall_orig != 3 && want <= 2)
 			{
 				grid [a][b] = 2;
 				success = 1;
@@ -153,7 +151,7 @@ player::find_path (board * Board, int a, int b)
 			// if no direction is good ...
 			if (success == 0)
 			{
-				couter = 100 * size_x * size_y;
+				counter = 100 * size_x * size_y;
 				break;
 			}
 
@@ -164,8 +162,8 @@ player::find_path (board * Board, int a, int b)
 
 	// we cleanup the mess
 	for (int i = 0; i <= size_x-1; i++)
-		if (grid[i]) free (grid[i]);
-	free (grid);
+		if (grid[i]) delete [] grid[i];
+	delete [] grid;
 
 	return counter;
 }
@@ -185,7 +183,8 @@ player::move (board * Board, int d)
 
 	int returnVal	= -1,
 	    otherX	= Board->get_py (other_index),
-	    otherY	= Board->get_px (other_index);
+	    otherY	= Board->get_px (other_index),
+	    wallinfo;
 
 	// we check if we can move in that direction
 	// d:
@@ -196,7 +195,7 @@ player::move (board * Board, int d)
 	switch (d)
 	{
 		case 1:
-			int wallinfo = Board->tile_status (x, y);
+			wallinfo = Board->tile_status (x, y);
 
 			// they cannot walk through the walls
 			if (wallinfo == 1 || wallinfo == 3)
@@ -215,7 +214,7 @@ player::move (board * Board, int d)
 			}
 			break;
 		case 2:
-			int wallinfo = Board->tile_status (x, y);
+			wallinfo = Board->tile_status (x, y);
 
 			// again check for walls
 			if (wallinfo == 2 || wallinfo == 3)
@@ -234,7 +233,7 @@ player::move (board * Board, int d)
 			}
 			break;
 		case 3:
-			int wallinfo = Board->tile_status (x, y-1);
+			wallinfo = Board->tile_status (x, y-1);
 
 			if (wallinfo == 1 || wallinfo == 3)
 				returnVal = PLAYER_FAYUL;
@@ -250,7 +249,7 @@ player::move (board * Board, int d)
 			}
 			break;
 		case 4:
-			int wallinfo = Board->tile_status (x-1, y);
+			wallinfo = Board->tile_status (x-1, y);
 
 			if (wallinfo == 2 || wallinfo == 3)
 				returnVal = PLAYER_FAYUL;
@@ -266,7 +265,7 @@ player::move (board * Board, int d)
 			}
 			break;
 		default:
-			std::cout << "Error! Unknown direction.\nExiting!" << std:endl;
+			std::cout << "Error! Unknown direction.\nExiting!" << std::endl;
 			exit (EXIT_FAILURE);
 	}
 
@@ -288,8 +287,9 @@ player::wall (board * Board, int xc, int yc, int mode)
 
 	int other_index = (index + 1)%2,
 	    otherX	= Board->get_py (other_index),
-	    otherY	= Board->get_px (other_index);
-
+	    otherY	= Board->get_px (other_index),
+	    wall_next	= 0,
+	    sPath	= 0;
 
 	// we check if we have enough walls
 	if (walls < 1)
@@ -301,20 +301,23 @@ player::wall (board * Board, int xc, int yc, int mode)
 		case 1:
 			// walls cannot go out of the board
 			if (xc == size_x-1)
+			{
 				returnVal = PLAYER_FAYUL;
+				break;
+			}
+			wall_next = Board->tile_status (xc + 1, yc);
 
 			// there already is a wall in the current tile
-			else if (wall_orig == 1 || wall_orig == 3)
+			if (wall_orig == 1 || wall_orig == 3)
 				returnVal = PLAYER_FAYUL;
 
 			// there is already a wall in the adjacent tile
-			int wall_next = Board->tile_status (xc + 1, yc);
 			else if (wall_next == 1 || wall_next == 3)
 				returnVal = PLAYER_FAYUL;
 
 			// we check if this criples either of players
 			// a) does it cripple us?
-			int sPath = find_path (Board, x, y);
+			sPath = find_path (Board, x, y);
 			if (sPath >= size_x * size_y * 4)
 				returnVal = PLAYER_FAYUL;
 
@@ -336,17 +339,20 @@ player::wall (board * Board, int xc, int yc, int mode)
 			break;
 		case 2:
 			if (yc == size_y - 1)
+			{
+				returnVal = PLAYER_FAYUL;
+				break;
+			}
+			wall_next = Board->tile_status (xc, yc+1);
+
+			if (wall_orig == 2 || wall_orig == 3)
 				returnVal = PLAYER_FAYUL;
 
-			else if (wall_orig == 2 || wall_orig == 3)
-				returnVal = PLAYER_FAYUL;
-
-			int wall_next = Board_>tile_status (xc, yc + 1);
 			else if (wall_next == 2 || wall_next == 3)
 				returnVal = PLAYER_FAYUL;
 
 			// we check if this criples either of players
-			int sPath;
+			sPath;
 			// a) does it cripple us?
 			sPath = find_path (Board, x, y);
 			if (sPath >= size_x * size_y * 4)
@@ -369,4 +375,6 @@ player::wall (board * Board, int xc, int yc, int mode)
 			std::cout << "Error! Unknown wall specification!\nExiting." << std::endl;
 			exit (EXIT_FAILURE);
 	}
+
+	return returnVal;
 }

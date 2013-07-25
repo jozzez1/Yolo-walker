@@ -5,6 +5,10 @@
 #define WALL_SUCCESS	14
 #define PLAYER_FAYUL	13
 
+#include "board.h"
+
+using namespace std;
+
 // the player class
 class player
 {
@@ -25,22 +29,23 @@ class player
 
 		// some self-explainatory functions
 		int get_path ()	{ return path; }
-		int get_walls() { return num_walls; }
+		int get_walls() { return walls; }
 
 		void set_walls (int);
 
 		int move (board *, int, int);
 		int wall (board *, int, int, int);
 		int find_path (board *, int, int);
+		int move (board *, int);
 
 		// set starting x-coordinate
 		// int setX ();
 
 		// constructor
-		void player (board *, int, int, string);
+		player (board *, int, int, string);
 
 		// destructor
-		void ~player ();
-}
+		~player ();
+};
 
 #endif
