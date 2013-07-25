@@ -7,7 +7,7 @@ player::player (board * Board, int number, int init_walls, string Player_name)
 {
 	path	= Board->getY ();
 	y	= 0;
-	x	= Board->getX () /2;
+	x	= Board->getX ()/2 + 1;
 	walls	= init_walls;
 
 	// we have to give him the index
