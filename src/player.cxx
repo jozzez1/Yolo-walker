@@ -162,6 +162,11 @@ player::find_path (board * Board, int a, int b)
 		} while (counter <= size_x * size_y * 4 && b > 1);
 	}
 
+	// we cleanup the mess
+	for (int i = 0; i <= size_x-1; i++)
+		if (grid[i]) free (grid[i]);
+	free (grid);
+
 	return counter;
 }
 
