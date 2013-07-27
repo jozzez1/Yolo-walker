@@ -4,25 +4,50 @@ Note: the name will probably have to change in the future :P
 
 I Introduction
 ----------------------------
-A simple 2 player game, based on a board game I played one summer, whose name I cannot remember.
+A simple 2 player game, based on a board game I played one summer,
+whose name I cannot remember.
 
 
 II Game rulez
 -----------------------------
-The game has a simple rules: your objective is to reach the other side of the board before your
-opponent. Each turn you can move in either direction (not diagonal) or build a wall to annoy your
+The game has simple rules: your objective is to reach the other
+side of the board before your opponent. Each turn you can move in
+either direction (not diagonal) or build a wall to annoy your
 competitor.
 
-III Current Objectives
+III DONE
 -----------------------------
-* program it in C++, with Qt library,
-* use cURL library for playing over the web
-* create simple board, images and so on with gimp
+a) simple player class
+b) simple board class
+c) engine class
+
+   d) turn mechanism:
+   ~~~~~~~~~~~~~~~~~~
+   1 Engine checks the turn, based on it decides which player has to
+   move.
+
+   2 `player' class takes the input ( <-- not done yet), and presents
+   his turn to the engine. If the engine determines the turn is valid,
+   it moves to the other player, if the turn is invalid, the player
+   has to repeat his move.
+
+   3 after the move was valid, engine updates the player and the board
+   classes. After this it checks, if either player has achieved victory.
+   If so, the game is over. Otherwise, the game continues.
+
+e) added a sample tile, with player tokens using Inkscape.
+
+III TO-DO
+-----------------------------
+* create the function for player input (keyboard/mouse) using SDL
+* create more tile images for the board
+* create the tile class, with an image and coordinates
 * create a very simple brute force AI for playing alone
+* use cURL library for playing over the web
 
 IV License
 -----------------------------
-GPL, since we use Qt, I guess. Or GPL compatible license, like
+GPL, since we will use SDL, I guess. Or GPL compatible license, like
 WTFPL :P.
 
 V Credits
