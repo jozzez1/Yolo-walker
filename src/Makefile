@@ -1,7 +1,7 @@
 CC=clang++
 
 .if !empty (OSTYPE:Mlinux*) || defined (FORCE_CC)
-  CC=++
+  CC=g++
 .endif
 
 OFLAG=-O3
