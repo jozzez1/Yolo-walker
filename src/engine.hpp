@@ -14,12 +14,12 @@ class engine
 		board * Board;
 
 	public:
-
+		// constructor/destructor
 		engine (int, string, string, int, int);
 		~engine ();
 
 		// functions that give turns to players
-		void make_turn ();
+		int make_turn ();
 		trn give_turn ();
 
 		// functions that check the validity of

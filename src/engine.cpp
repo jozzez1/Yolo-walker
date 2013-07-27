@@ -44,7 +44,7 @@ engine::give_turn ()
 
 // we give the turn to the player, and then
 // make the proper changes in the board
-void
+int
 engine::make_turn ()
 {
 	trn player_turn = give_turn ();
@@ -76,6 +76,7 @@ engine::make_turn ()
 	}
 
 	turn++;
+	return check_victory ();
 }
 
 // we check for validity of player's move
