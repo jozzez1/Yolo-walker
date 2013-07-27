@@ -15,7 +15,7 @@ side of the board before your opponent. Each turn you can move in
 either direction (not diagonal) or build a wall to annoy your
 competitor.
 
-III DONE
+III-a DONE
 -----------------------------
 a) simple player class
 b) simple board class
@@ -37,7 +37,7 @@ c) engine class
 
 e) added a sample tile, with player tokens using Inkscape.
 
-III TO-DO
+III-b TO-DO
 -----------------------------
 * create the function for player input (keyboard/mouse) using SDL
 * create more tile images for the board
