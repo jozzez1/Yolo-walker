@@ -10,7 +10,7 @@ engine::engine (int init_walls,
 	Board	= new board (Xdim, Ydim);
 	p	= new player * [2];
 	p[0]	= new player (0, Xdim/2+1, 0, init_walls, p1_name);
-	p[1]	= new player (1, Xdim/2+1, 1, init_walls, p2_name);
+	p[1]	= new player (1, Xdim/2+1, Ydim, init_walls, p2_name);
 	
 	turn	= 0;
 }
