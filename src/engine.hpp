@@ -1,10 +1,9 @@
 #ifndef __GAME_ENGINE
 #define __GAME_ENGINE
 
-#include <iostream>
-#include <string>
-#include "player.h"
-#include "board.h"
+#include "game.hpp"
+#include "player.hpp"
+#include "board.hpp"
 
 class engine
 {
@@ -17,8 +16,21 @@ class engine
 	public:
 
 		engine (int, string, string, int, int);
+		~engine ();
 
+		// functions that give turns to players
 		void make_turn ();
-		int give_turn ();
-		int check_turn ();
+		trn give_turn ();
+
+		// functions that check the validity of
+		// the turn
+		int check_turn (trn);
+		int check_move (trn);
+		int check_wall (trn);
+		int find_path (int,int);
+
+		// function that checks game-over
+		int check_victory ();
 };
+
+#endif

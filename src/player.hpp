@@ -1,11 +1,9 @@
 #ifndef __PLAYER
 #define __PLAYER
 
-#define MOVE_SUCCESS	15
-#define WALL_SUCCESS	14
-#define PLAYER_FAYUL	13
-
-#include "board.h"
+#include <iostream>
+#include <string>
+#include "game.hpp"
 
 using namespace std;
 
@@ -13,37 +11,28 @@ using namespace std;
 class player
 {
 	private:
-		int path,	// shortest path to the finish
-		    index,	// player 1,2, ... , n
-		    walls;	// number of walls a player can still build
-
-		int turn_info;	// if the turn is successfull or not
+		int index,	// player 1,2, ... , n
+		    walls,	// number of walls a player can still build
+		    x,		// the current x-coordinate on the board
+		    y;		// the current y-coordinate on the board
 
 		string name;	// player's name
 		
-		void update_path (board *);
-		void update_path (int);
-
 	public:
-		int x,		// x position on the board
-		    y;		// y position on the board
 
 		// some self-explainatory functions
-		int get_path ()	{ return path; }
+		trn get_input ();
+
 		int get_walls() { return walls; }
 
-		void set_walls (int);
-
-		int move (board *, int, int);
-		int wall (board *, int, int, int);
-		int find_path (board *, int, int);
-		int move (board *, int);
+		void move (int, int);
+		void use_wall () { walls--; }
 
 		// set starting x-coordinate
 		// int setX ();
 
 		// constructor
-		player (board *, int, int, string);
+		player (int, int, int, int, string);
 
 		// destructor
 		~player ();

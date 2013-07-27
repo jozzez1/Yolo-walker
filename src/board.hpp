@@ -17,14 +17,14 @@ class board
 		int getY () { return Y; }
 
 		// get player1/2 coordinates
-		int get_px (int a) { return x[a]; }
-		int get_py (int a) { return y[a]; }
+		int get_px (int);
+		int get_py (int);
 
 		// checks the wall status of the tile
 		int tile_status (int, int);
 		
 		void set_wall (int, int, int);
-		void move_player (int, int, int);
+		void move (int, int, int);
 
 		// constructor
 		board (int X_dimension, int Y_dimension);
