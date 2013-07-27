@@ -1,7 +1,7 @@
-CC=clang++
+CXX=clang++
 
 .if !empty (OSTYPE:Mlinux*) || defined (FORCE_CC)
-  CC=g++
+  CXX=g++
 .endif
 
 OFLAG=-O3
@@ -10,16 +10,16 @@ OPTFLAGS=$(OFLAG) -funroll-loops -fno-strict-aliasing -ffast-math -fstack-protec
 WARNFLAGS=-Wall -pedantic-errors
 LIBFLAGS=
 
-CFLAGS=$(CPUFLAGS) $(WARNFLAGS) $(LIBFLAGS) $(OPTFLAGS)
+CXXFLAGS=$(CPUFLAGS) $(WARNFLAGS) $(LIBFLAGS) $(OPTFLAGS)
 
 engine: player board
-	$(CC) $(CFLAGS) -c engine.cpp
+	$(CXX) $(CXXFLAGS) -c engine.cpp
 
 player:
-	$(CC) $(CFLAGS) -c player.cpp
+	$(CXX) $(CXXFLAGS) -c player.cpp
 
 board:
-	$(CC) $(CFLAGS) -c board.cpp
+	$(CXX) $(CXXFLAGS) -c board.cpp
 
 clean:
 	rm -rf ./*.o
