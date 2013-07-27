@@ -24,6 +24,8 @@ class player
 		trn get_input ();
 
 		int get_walls() { return walls; }
+		int get_x () { return x; }
+		int get_y () { return y; }
 
 		void move (int, int);
 		void use_wall () { walls--; }

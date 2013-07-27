@@ -464,3 +464,18 @@ engine::find_path (int a, int b)
 	return counter;
 }
 
+// check for victory
+int
+engine::check_victory ()
+{
+	int returnVal = CONTINUE_GAME;
+
+	if (p [0]->get_y () == Board->getY ())
+		returnVal = P1_WON;
+
+	else if (p [1]->get_y () == 0)
+		returnVal = P2_WON;
+
+	return returnVal;
+}
+

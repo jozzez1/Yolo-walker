@@ -17,6 +17,15 @@
 // player attempted an invalid move
 #define PLAYER_FAYUL	13
 
+// nobody won yet
+#define CONTINUE_GAME	12
+
+// player 2 won, the game is over
+#define P2_WON		11
+
+// player 1 won, the game is over
+#define P1_WON		10
+
 // struct with output from a player turn
 typedef struct trn
 {
