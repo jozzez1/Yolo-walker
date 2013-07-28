@@ -18,8 +18,8 @@ engine::engine (int init_walls,
 // destrurctor
 engine::~engine ()
 {
-	delete [] p[1];
-	delete [] p[0];
+	delete p[1];
+	delete p[0];
 	delete [] p;
 	delete Board;
 }
