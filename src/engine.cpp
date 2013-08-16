@@ -1,7 +1,7 @@
 #include "engine.hpp"
 
 // constructor
-engine::engine (int init_walls,
+Engine::Engine (int init_walls,
 		string p1_name,
 		string p2_name,
 		int Xdim,
@@ -16,7 +16,7 @@ engine::engine (int init_walls,
 }
 
 // destrurctor
-engine::~engine ()
+Engine::~Engine ()
 {
 	delete p[1];
 	delete p[0];
@@ -27,7 +27,7 @@ engine::~engine ()
 // we give a turn to the player, until it is
 // successfull (see, valid)
 trn
-engine::give_turn ()
+Engine::give_turn ()
 {
 	int status;
 
@@ -35,7 +35,8 @@ engine::give_turn ()
 
 	do
 	{
-		player_wants = p[turn % 2]->get_input ();
+		//player_wants = p[turn % 2]=1;
+		// TODO to pride od drugje ->get_input();
 		status = check_turn (player_wants);
 	} while (status != ALL_CLEAR);
 
@@ -45,7 +46,7 @@ engine::give_turn ()
 // we give the turn to the player, and then
 // make the proper changes in the board
 int
-engine::make_turn ()
+Engine::make_turn ()
 {
 	trn player_turn = give_turn ();
 
@@ -81,7 +82,7 @@ engine::make_turn ()
 
 // we check for validity of player's move
 int
-engine::check_turn (trn player_wants)
+Engine::check_turn (trn player_wants)
 {
 	int turn_signal;
 
@@ -104,7 +105,7 @@ engine::check_turn (trn player_wants)
 }
 
 int
-engine::check_move (trn player_want)
+Engine::check_move (trn player_want)
 {
 	// index of the other player
 	int other_index = (turn + 1)%2;
@@ -119,8 +120,7 @@ engine::check_move (trn player_want)
 	// we check if the wanted destination is indeed
 	// close enough -- 1st norm of the difference vector
 	// must be one
-	int dist = abs (player_want.x - playerX) +
-		abs (player_want.y - playerY);
+	int dist = abs(player_want.x - playerX)+abs (player_want.y - playerY);
 
 	if (dist != 1)
 		returnVal = PLAYER_FAYUL;
@@ -228,7 +228,7 @@ engine::check_move (trn player_want)
 // we check if player is trying to move walls to a valid position
 // ...
 int
-engine::check_wall (trn player_want)
+Engine::check_wall (trn player_want)
 {
 	// walls have size '2' so we have to check for one more side left
 	int wall_orig 	= Board->tile_status (player_want.x, player_want.y),
@@ -329,7 +329,7 @@ engine::check_wall (trn player_want)
 // a primitive algorithm, that cheks if the players are walled in
 // ... it will do for now
 int
-engine::find_path (int a, int b)
+Engine::find_path (int a, int b)
 {
 	int size_x	= Board->get_px (turn % 2),
 	    size_y	= Board->get_py (turn % 2),
@@ -467,7 +467,7 @@ engine::find_path (int a, int b)
 
 // check for victory
 int
-engine::check_victory ()
+Engine::check_victory ()
 {
 	int returnVal = CONTINUE_GAME;
 
