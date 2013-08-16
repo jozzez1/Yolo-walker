@@ -39,13 +39,24 @@ e) added a sample tile, with player tokens using Inkscape.
 
 III-b TO-DO
 -----------------------------
+* ! CHANGE SDL LIBRARY TO 2.0 ! 
 * create the function for player input (keyboard/mouse) using SDL
 * create more tile images for the board
 * create the tile class, with an image and coordinates
 * create a very simple brute force AI for playing alone
 * use cURL library for playing over the web
 
-IV License
+IV Arhitecture
+-----------------------------
+	Game
+	|----Engine (all game logic, START(), MOVE())
+		|----Input (provides all user input)
+		|----Player (which player, cordinates)
+		|----Wall (which wall, coordinates)
+		|----Board (paint canvas for graphics to be shown; int n*n table )
+			|----Tile (images drown on canvas)
+
+V License
 -----------------------------
 GPL, since we will use SDL, I guess. Or GPL compatible license, like
 WTFPL :P.
