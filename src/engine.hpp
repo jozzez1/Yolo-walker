@@ -1,11 +1,13 @@
 #ifndef __GAME_ENGINE
 #define __GAME_ENGINE
 
+#include <stdlib.h>
+
 #include "game.hpp"
 #include "player.hpp"
 #include "board.hpp"
 
-class engine
+class Engine
 {
 	private:
 		int turn;
@@ -15,8 +17,8 @@ class engine
 
 	public:
 		// constructor/destructor
-		engine (int, string, string, int, int);
-		~engine ();
+		Engine (int, string, string, int, int);
+		~Engine ();
 
 		// functions that give turns to players
 		int make_turn ();
