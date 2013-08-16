@@ -17,6 +17,11 @@ player::player (int number,		// player index -- 0 = player 1, 1 = player2
 	name.assign (Player_name);
 }
 
+player::~player ()
+{
+
+}
+
 // we move the player to a different location
 void
 player::move (int x_new, int y_new)
